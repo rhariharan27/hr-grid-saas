@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "url": "employees/create",
+      "icon": "menu-icon tf-icons bx bx-user-plus",
+      "name": "Employee",
+      "slug": "employees.create"
+    },
+    {
+      "url": "clients/create",
+      "icon": "menu-icon tf-icons bx bx-user-plus",
+      "name": "Clients",
+      "slug": "distributors.create"
+    }
+  ]
+}

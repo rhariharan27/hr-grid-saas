@@ -1,0 +1,13 @@
+{
+  "name": "DataImportExport",
+  "alias": "dataimportexport",
+  "displayName": "Data Import Export",
+  "version": "2.0.0",
+  "description": "This module enables data import and export.",
+  "keywords": [],
+  "priority": 0,
+  "providers": [
+    "Modules\\DataImportExport\\App\\Providers\\DataImportExportServiceProvider"
+  ],
+  "files": []
+}

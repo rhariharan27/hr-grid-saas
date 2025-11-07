@@ -1,0 +1,49 @@
+/.phpunit.cache
+/node_modules
+
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+
+# .env
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+
+docker-compose.override.yml
+
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+!/public/assets
+!/public/assets/*
+/public/css
+/public/js
+/storage/logs/laravel.log
+
+storage/*
+
+# Exclude these specific directories from being ignored
+!storage/app/
+!storage/framework/
+!storage/logs/
+
+# Ignore everything inside app, framework, and logs, except the directories themselves
+storage/app/*
+storage/framework/*
+storage/logs/*
+
+# Allow hidden `.gitignore` files in the storage subdirectories to keep them in Git
+!storage/app/.gitignore
+!storage/framework/.gitignore
+!storage/logs/.gitignore
+
+

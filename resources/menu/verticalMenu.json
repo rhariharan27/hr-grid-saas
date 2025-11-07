@@ -1,0 +1,131 @@
+{
+  "menu": [
+    {
+      "url": "/dashboard",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons bx bx-home-smile",
+      "slug": "superAdmin.dashboard"
+    },
+    {
+      "url": "/account/customerIndex",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "name": "Customers",
+      "slug": "account.customerIndex"
+    },
+    {
+      "url": "/domainRequests",
+      "icon": "menu-icon tf-icons bx bx-globe",
+      "name": "Domain Requests",
+      "slug": "domainRequests.index"
+    },
+    {
+      "url": "/offlineRequests",
+      "icon": "menu-icon tf-icons bx bx-wifi-off",
+      "name": "Offline Requests",
+      "slug": "offlineRequests.index"
+    },
+    {
+      "url": "/orders",
+      "icon": "menu-icon tf-icons bx bx-cart",
+      "name": "Orders",
+      "slug": "orders.index"
+    },
+    {
+      "url": "/plans",
+      "icon": "menu-icon tf-icons bx bx-credit-card",
+      "name": "Plans",
+      "slug": "plans.index"
+    },
+    {
+      "url": "/account",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "name": "Users",
+      "slug": "account.index"
+    },
+    {
+      "url": "/addons",
+      "icon": "menu-icon tf-icons bx bx-category",
+      "name": "Addons",
+      "slug": "addons.index"
+    },
+    {
+      "url": "/support",
+      "name": "Support",
+      "icon": "menu-icon bx bx-support",
+      "slug": "support.index"
+    },
+    {
+      "name": "Landing Page",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "addon": "LandingPage",
+      "slug": [
+        "landingPage.features.index",
+        "landingPage.reviews.index",
+        "landingPage.teamMembers.index",
+        "landingPage.faqs.index",
+        "landingPage.funFacts.index",
+        "landingPage.contactSubmissions.index",
+        "landingPage.settings.index"
+      ],
+      "submenu": [
+        {
+          "url": "/landingFeatures",
+          "name": "Features",
+          "slug": "landingPage.features.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/landingReviews",
+          "name": "Reviews",
+          "slug": "landingPage.reviews.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/teamMembers",
+          "name": "Team Members",
+          "slug": "landingPage.teamMembers.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/faqs",
+          "name": "FAQs",
+          "slug": "landingPage.faqs.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/funFacts",
+          "name": "Fun Facts",
+          "slug": "landingPage.funFacts.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/contactSubmissions",
+          "name": "Contact Submissions",
+          "slug": "landingPage.contactSubmissions.index",
+          "addon": "LandingPage"
+        },
+        {
+          "url": "/landingPage/settings",
+          "name": "Settings",
+          "slug": "landingPage.settings.index",
+          "addon": "LandingPage"
+        }
+      ]
+    },
+    {
+      "url": "/settings",
+      "icon": "menu-icon tf-icons bx bx-cog",
+      "name": "Settings",
+      "slug": "saSettings.index"
+    },
+    {
+      "menuHeader": "Tools"
+    },
+    {
+      "url": "/auditLogs",
+      "icon": "menu-icon tf-icons bx bx-history",
+      "name": "Audit Logs",
+      "slug": "auditLogs.index"
+    }
+  ]
+}

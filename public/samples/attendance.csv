@@ -1,0 +1,3 @@
+employee_code,check_in_time,check_out_time,late_reason,shift_code,early_checkout_reason,working_hours,late_hours,early_hours,overtime_hours,notes,status
+EMP001,2025-07-29 09:00,2025-07-29 18:00,,SHIFT1,,8.00,0.00,0.00,0.00,,present
+EMP002,2025-07-29 09:15,2025-07-29 18:05,Traffic delay,SHIFT2,,7.75,0.25,0.00,0.00,Late arrival,late

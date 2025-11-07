@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/dataimportexport",
+    "description": "",
+    "authors": [
+        {
+            "name": "CZ App Studio",
+            "email": "support@czappstudio.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\DataImportExport\\": "",
+            "Modules\\DataImportExport\\App\\": "app/",
+            "Modules\\DataImportExport\\Database\\Factories\\": "database/factories/",
+            "Modules\\DataImportExport\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\DataImportExport\\Tests\\": "tests/"
+        }
+    }
+}

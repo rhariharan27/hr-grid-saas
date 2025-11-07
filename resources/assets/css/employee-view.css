@@ -1,0 +1,17 @@
+.profile-picture-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.profile-picture-container:hover .profile-overlay {
+  display: flex;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profile-overlay {
+  display: none;
+}
