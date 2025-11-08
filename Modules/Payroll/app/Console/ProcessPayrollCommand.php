@@ -20,6 +20,7 @@ use Modules\Payroll\app\Models\PayrollAdjustmentLog;
 use Modules\Payroll\app\Models\PayrollCycle;
 use Modules\Payroll\app\Models\PayrollRecord;
 use Modules\Payroll\app\Models\Payslip;
+use Modules\Payroll\Enums\PayrollRecordStatus;
 
 class ProcessPayrollCommand extends Command
 {
@@ -213,7 +214,7 @@ class ProcessPayrollCommand extends Command
             'gross_salary' => $grossSalary,
             'net_salary' => $netSalary,
             'tax_amount' => $taxAmount,
-            'status' => 'pending',
+            'status' => PayrollRecordStatus::PENDING,
           ]);
 
           if (!empty($adjustmentsLogs)) {

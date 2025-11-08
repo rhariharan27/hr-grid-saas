@@ -22,8 +22,8 @@ class PayrollRecord extends Model implements AuditableContract
     'payroll_cycle_id',
     'period',
     'basic_salary',
-    'overtime_pay' .
-      'gross_salary',
+    'overtime_pay',
+    'gross_salary',
     'net_salary',
     'tax_amount',
     'status',
