@@ -1,0 +1,149 @@
+<?php
+
+namespace Modules\Payroll\Console;
+
+
+use App\Models\Attendance;
+use App\Models\AttendanceLog;
+use App\Models\Tenant;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+
+class CalculateAttendanceBak extends Command
+{
+  /**
+   * The name and signature of the console command.
+   *
+   * @var string
+   */
+  protected $signature = 'payroll:attendance-calculate';
+
+  /**
+   * The console command description.
+   *
+   * @var string
+   */
+  protected $description = 'Calculate attendance details for the current date';
+
+  /**
+   * Execute the console command.
+   */
+  public function handle()
+  {
+    Tenant::all()->runForEach(function () {
+      $currentDate = Carbon::now()->subDay()->format('Y-m-d');
+
+      Log::info("Starting attendance calculation for date: {$currentDate}");
+
+      $userIds = User::pluck('id')->toArray();
+
+      $attendanceUserIds = Attendance::whereDate('created_at', $currentDate)->pluck('user_id')->toArray();
+      $absentUserIds = array_diff($userIds, $attendanceUserIds);
+
+      foreach ($absentUserIds as $userId) {
+        Attendance::create([
+          'user_id' => $userId,
+          'created_at' => $currentDate,
+          'status' => 'absent',
+          'check_in_time' => null,
+          'check_out_time' => null,
+          'created_by_id' => null,
+          'updated_by_id' => null,
+          'tenant_id' => tenant('id'),
+        ]);
+
+        Log::info("Marked user ID: {$userId} as absent for date: {$currentDate}");
+      }
+
+      $attendances = Attendance::whereDate('created_at', $currentDate)->get();
+
+      foreach ($attendances as $attendance) {
+        Log::info("Processing attendance ID: {$attendance->id}");
+
+        $logs = AttendanceLog::where('attendance_id', $attendance->id)
+          ->orderBy('created_at')
+          ->get();
+
+        if ($logs->isEmpty()) {
+          Log::warning("No logs found for attendance ID: {$attendance->id}");
+          continue;
+        }
+
+        $shift = $logs->first()->shift;
+        // $shift = Shift::find($shiftId);
+
+        if (!$shift) {
+          Log::error("Shift not found in attendance ID: {$attendance->id}");
+          continue;
+        }
+
+        $shiftStartTime = $shift->start_time;
+        $shiftEndTime = $shift->end_time;
+
+        $workingHours = 0;
+        $breakHours = 0;
+        $lateHours = 0;
+        $earlyHours = 0;
+        $overtimeHours = 0;
+
+        $checkInTime = null;
+
+        foreach ($logs as $log) {
+          if ($log->type === 'check_in') {
+            $checkInTime = Carbon::parse($log->created_at);
+          } elseif ($log->type === 'check_out' && $checkInTime) {
+            $checkOutTime = Carbon::parse($log->created_at);
+
+            if ($log->is_break_start ?? false) {
+              $breakStartTime = Carbon::parse($log->created_at);
+            } elseif ($log->is_break_end ?? false && isset($breakStartTime)) {
+              $breakEndTime = Carbon::parse($log->created_at);
+              $breakHours += $breakStartTime->diffInMinutes($breakEndTime) / 60;
+              $breakStartTime = null;
+            } else {
+              $workingHours += $checkInTime->diffInMinutes($checkOutTime) / 60;
+            }
+            $checkInTime = null;
+          }
+        }
+
+        $netWorkingHours = max(0, $workingHours - $breakHours);
+
+        $expectedWorkHours = $shiftStartTime->diffInHours($shiftEndTime);
+
+        $lastCheckIn = $logs->where('type', 'check_in')->first();
+        if ($lastCheckIn) {
+          $checkInTime = Carbon::parse($lastCheckIn->created_at);
+          if ($checkInTime->greaterThan($shiftStartTime)) {
+            $lateHours = $checkInTime->diffInMinutes($shiftStartTime) / 60;
+          }
+        }
+
+        $lastCheckOut = $logs->where('type', 'check_out')->last();
+        if ($lastCheckOut) {
+          $checkOutTime = Carbon::parse($lastCheckOut->created_at);
+          if ($checkOutTime->lessThan($shiftEndTime)) {
+            $earlyHours = $shiftEndTime->diffInMinutes($checkOutTime) / 60;
+          }
+        }
+
+        if ($netWorkingHours > $expectedWorkHours) {
+          $overtimeHours = $netWorkingHours - $expectedWorkHours;
+        }
+
+        $attendance->working_hours = $netWorkingHours;
+        $attendance->late_hours = abs($lateHours);
+        $attendance->early_hours = abs($earlyHours);
+        $attendance->overtime_hours = $overtimeHours;
+        $attendance->save();
+
+        Log::info("Attendance ID: {$attendance->id} updated with working hours: {$netWorkingHours}, break hours: {$breakHours}, late hours: {$lateHours}, early hours: {$earlyHours}, overtime hours: {$overtimeHours}");
+      }
+    });
+
+    $this->info('Attendance calculations completed successfully!');
+    Log::info('Attendance calculations completed successfully!');
+  }
+}

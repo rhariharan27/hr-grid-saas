@@ -18,7 +18,7 @@
     "SalesTarget": false,
     "ManagerApp": false,
     "DigitalIdCard": false,
-    "Payroll": false,
+    "Payroll": true,
     "DynamicQrAttendance": false,
     "AiChat": true,
     "StripeGateway": false,
